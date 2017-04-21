@@ -71,7 +71,6 @@
               (is_active ?cleaner)
               (at ?cleaner ?x)
               (at ?r ?x)
-              (is_radioactive ?r)
               (empty ?cleaner)
               )
 :effect (and
