@@ -1,8 +1,8 @@
 package eu.atanasio.middleware;
 
-import eu.atanasio.BuildingMap;
 import eu.atanasio.Cleaner;
 import eu.atanasio.Drone;
+import eu.atanasio.PointMap;
 import eu.atanasio.Rubble;
 
 import java.io.FileNotFoundException;
@@ -12,7 +12,7 @@ import java.io.PrintWriter;
  * Created by victorperez on 16/04/17.
  */
 public class TroubleMaker {
-    public static void make(BuildingMap map, Cleaner[] cleaners, Drone[] drones, Rubble[] rubbles, Cleaner[] cleanersEnd, Drone[] dronesEnd, Rubble[] rubblesEnd) {
+    public static void make(PointMap map, Cleaner[] cleaners, Drone[] drones, Rubble[] rubbles, Cleaner[] cleanersEnd, Drone[] dronesEnd, Rubble[] rubblesEnd) {
         String out = "(define (problem pickup1234) (:domain Nuclear)\n" +
                 "(:objects\n";
         for (int i = 0; i < cleaners.length; i++) {

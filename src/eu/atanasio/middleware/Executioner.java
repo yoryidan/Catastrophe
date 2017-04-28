@@ -1,12 +1,12 @@
 package eu.atanasio.middleware;
 
-import eu.atanasio.BuildingMap;
 import eu.atanasio.Cleaner;
 import eu.atanasio.CleanerOperationException;
 import eu.atanasio.Drone;
 import eu.atanasio.DroneOperationException;
 import eu.atanasio.Machine;
 import eu.atanasio.Pickable;
+import eu.atanasio.PointMap;
 import eu.atanasio.Rubble;
 import eu.atanasio.Waypoint;
 import lombok.Data;
@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -30,25 +31,28 @@ public class Executioner {
     public static Waypoint r2 = new Waypoint("r2");
     public static Waypoint r3 = new Waypoint("r3");
     public static Waypoint r4 = new Waypoint("r4");
-    public static BuildingMap map = getMap();
+    public static Waypoint[] waypoints = getMap();
 
     public static Drone drone0 = new Drone("drone0",50);
     public static Cleaner cleaner0 = new Cleaner("cleaner0",50);
     public static Rubble rubble0 = new Rubble("rubble0");
     public static Rubble rubble1 = new Rubble("rubble1");
-
+    public static Pickable[] participants = {drone0,cleaner0,rubble0,rubble1};
 
     public static Drone drone0End = new Drone("drone0",50);
     public static Cleaner cleaner0End = new Cleaner("cleaner0",50);
     public static Rubble rubble0End = new Rubble("rubble0");
     public static Rubble rubble1End = new Rubble("rubble1");
+    public static Pickable[] finalState = {drone0End,cleaner0End,rubble0End,rubble1End};
 
-    public static Cleaner[] cleaners = {cleaner0};
-    public static Drone[] drones = {drone0};
-    public static Rubble[] rubbles = {rubble0,rubble1};
-    public static Cleaner[] cleanersEnd = {cleaner0End};
-    public static Drone[] dronesEnd = {drone0End};
-    public static Rubble[] rubblesEnd = {rubble0End,rubble1End};
+    public static PointMap map = new PointMap(waypoints,participants,finalState);
+
+    public static Cleaner[] cleaners = getArrayOfCleaners(participants);
+    public static Drone[] drones = getArrayOfDrones(participants);
+    public static Rubble[] rubbles = getArrayOfRubbles(participants);
+    public static Cleaner[] cleanersEnd = getArrayOfCleaners(finalState);
+    public static Drone[] dronesEnd = getArrayOfDrones(finalState);
+    public static Rubble[] rubblesEnd = getArrayOfRubbles(finalState);
 
     public void setUp(){
         drone0.setPosition(map.getWaypoints()[0]);
@@ -114,9 +118,8 @@ public class Executioner {
         }
     }
 
-    public static BuildingMap getMap() {
-        Waypoint[] Waypoints = {r0,r1,r2,r3,r4};
-        BuildingMap map = new BuildingMap(Waypoints);
+    public static Waypoint[] getMap() {
+        Waypoint[] waypoints = {r0,r1,r2,r3,r4};
 
         //Waypoint 0
         HashSet<Waypoint> auxWalk0 = new HashSet<>();
@@ -170,7 +173,7 @@ public class Executioner {
         r4.setConnectedWaypointsByLand(auxWalk4);
         r4.fixWaypoints();
 
-        return map;
+        return waypoints;
     }
 
     public int executeCommand(String[] command){
@@ -243,5 +246,34 @@ public class Executioner {
                 return -1;
         }
         return -1;
+    }
+
+    static public Cleaner[] getArrayOfCleaners (Pickable[] objs){
+        ArrayList<Cleaner> x = new ArrayList<>();
+        for (Pickable p : objs){
+            if (p instanceof Cleaner)
+                x.add((Cleaner) p);
+        }
+        Cleaner[] rtn = x.toArray(new Cleaner[x.size()]);
+        return rtn;
+    }
+    static public Drone[] getArrayOfDrones (Pickable[] objs){
+        ArrayList<Drone> x = new ArrayList<>();
+        for (Pickable p : objs){
+            if (p instanceof Drone)
+                x.add((Drone) p);
+        }
+        Drone[] rtn = x.toArray(new Drone[x.size()]);
+        return rtn;
+    }
+
+    static public Rubble[] getArrayOfRubbles (Pickable[] objs){
+        ArrayList<Rubble> x = new ArrayList<>();
+        for (Pickable p : objs){
+            if (p instanceof Rubble)
+                x.add((Rubble) p);
+        }
+        Rubble[] rtn = x.toArray(new Rubble[x.size()]);
+        return rtn;
     }
 }
