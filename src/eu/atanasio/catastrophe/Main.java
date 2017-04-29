@@ -1,4 +1,4 @@
-package eu.atanasio;
+package eu.atanasio.catastrophe;
 
 import eu.atanasio.catastrophe.middleware.Executioner;
 import eu.atanasio.catastrophe.singletons.Configuration;
