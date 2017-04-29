@@ -62,7 +62,7 @@ public class PointMapDeserializer extends JsonDeserializer<PointMap> {
             Pickable p;
             switch (node.get("participants").get(i).get("class").asText()){
                 case "Drone":
-                    Drone d = new Drone(node.get("participants").get(i).get("name").asText());
+                    Drone d = new Drone(node.get("participants").get(i).get("id").asText());
                     d.setBroken(node.get("participants").get(i).get("broken").asBoolean());
                     d.setDeathCounter(node.get("participants").get(i).get("deathCounter").asInt());
                     for(Waypoint w : waypointList){
@@ -74,7 +74,7 @@ public class PointMapDeserializer extends JsonDeserializer<PointMap> {
                     p = d;
                     break;
                 case "Cleaner":
-                    Cleaner c = new Cleaner(node.get("participants").get(i).get("name").asText());
+                    Cleaner c = new Cleaner(node.get("participants").get(i).get("id").asText());
                     c.setDeathCounter(node.get("participants").get(i).get("deathCounter").asInt());
                     c.setBroken(node.get("participants").get(i).get("broken").asBoolean());
                     for(Waypoint w : waypointList){
@@ -86,7 +86,7 @@ public class PointMapDeserializer extends JsonDeserializer<PointMap> {
                     p = c;
                     break;
                 case "Rubble":
-                    Rubble r = new Rubble(node.get("participants").get(i).get("name").asText());
+                    Rubble r = new Rubble(node.get("participants").get(i).get("id").asText());
                     r.setRadioactive(node.get("participants").get(i).get("radioactive").asBoolean());
                     r.setAssessed(node.get("participants").get(i).get("assessed").asBoolean());
                     for(Waypoint w : waypointList){
@@ -106,7 +106,7 @@ public class PointMapDeserializer extends JsonDeserializer<PointMap> {
             Pickable p;
             switch (node.get("finalState").get(i).get("class").asText()){
                 case "Drone":
-                    Drone d = new Drone(node.get("finalState").get(i).get("name").asText());
+                    Drone d = new Drone(node.get("finalState").get(i).get("id").asText());
                     d.setDeathCounter(node.get("finalState").get(i).get("deathCounter").asInt());
                     d.setBroken(node.get("finalState").get(i).get("broken").asBoolean());
                     for(Waypoint w : waypointList){
@@ -118,7 +118,7 @@ public class PointMapDeserializer extends JsonDeserializer<PointMap> {
                     p = d;
                     break;
                 case "Cleaner":
-                    Cleaner c = new Cleaner(node.get("finalState").get(i).get("name").asText());
+                    Cleaner c = new Cleaner(node.get("finalState").get(i).get("id").asText());
                     c.setDeathCounter(node.get("finalState").get(i).get("deathCounter").asInt());
                     c.setBroken(node.get("finalState").get(i).get("broken").asBoolean());
                     for(Waypoint w : waypointList){
@@ -130,7 +130,7 @@ public class PointMapDeserializer extends JsonDeserializer<PointMap> {
                     p = c;
                     break;
                 case "Rubble":
-                    Rubble r = new Rubble(node.get("finalState").get(i).get("name").asText());
+                    Rubble r = new Rubble(node.get("finalState").get(i).get("id").asText());
                     r.setRadioactive(node.get("finalState").get(i).get("radioactive").asBoolean());
                     r.setAssessed(node.get("finalState").get(i).get("assessed").asBoolean());
                     for(Waypoint w : waypointList){

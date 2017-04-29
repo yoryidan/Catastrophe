@@ -25,13 +25,13 @@ public class TroubleMaker {
         String out = "(define (problem pickup1234) (:domain Nuclear)\n" +
                 "(:objects\n";
         for (Cleaner c : cleaners){
-            out += "        (:private " + c.getName() + "\n" +
-                    "            " + c.getName() + " - cleaner\n" +
+            out += "        (:private " + c.getId() + "\n" +
+                    "            " + c.getId() + " - cleaner\n" +
                     "        )\n";
         }
         for (Drone d : drones) {
-            out += "        (:private " + d.getName() + "\n" +
-                    "            " + d.getName() + " - drone\n" +
+            out += "        (:private " + d.getId() + "\n" +
+                    "            " + d.getId() + " - drone\n" +
                     "        )\n";
         }
         for (Waypoint w : map.getWaypoints()) {
@@ -41,52 +41,52 @@ public class TroubleMaker {
                 out += "        " + w.getId() + " - waypoint\n";
         }
         for (Rubble r : rubbles) {
-            out += "        " + r.getName() + " - rubble\n";
+            out += "        " + r.getId() + " - rubble\n";
         }
         out += ")\n" +
                 "(:init\n";
         for (Drone d : drones) {
-            out += "        (is_active " + d.getName() + ")\n" +
-                    "        (at " + d.getName();
+            out += "        (is_active " + d.getId() + ")\n" +
+                    "        (at " + d.getId();
             for (Waypoint w : map.getWaypoints()) {
                 if (d.getPosition().equals(w))
                     out += " " + w.getId() + ")\n";
             }
             if (d.isBroken()){
-                out += "        (is_broken " + d.getName() + ")\n";
+                out += "        (is_broken " + d.getId() + ")\n";
             }
             else {
-                out += "        (is_active " + d.getName() + ")\n";
+                out += "        (is_active " + d.getId() + ")\n";
             }
         }
         for (Cleaner c : cleaners) {
             if (c.getCargo() == null){
-                out += "        (empty " + c.getName() + ")\n" ;
+                out += "        (empty " + c.getId() + ")\n" ;
             }
             else {
-                out += "        (full " + c.getCargo().getName() + " " + c.getName() + ")\n" ;
+                out += "        (full " + c.getCargo().getId() + " " + c.getId() + ")\n" ;
             }
-            out += "        (is_active " + c.getName() + ")\n" +
-                    "        (at " + c.getName();
+            out += "        (is_active " + c.getId() + ")\n" +
+                    "        (at " + c.getId();
             for (Waypoint w : map.getWaypoints()) {
                 if (c.getPosition().equals(w))
                     out += " " + w.getId() + ")\n";
             }
             if (c.isBroken()){
-                out += "        (is_broken " + c.getName() + ")\n";
+                out += "        (is_broken " + c.getId() + ")\n";
             }
             else {
-                out += "        (is_active " + c.getName() + ")\n";
+                out += "        (is_active " + c.getId() + ")\n";
             }
         }
         for (Rubble r : rubbles) {
-            out += "        (at " + r.getName();
+            out += "        (at " + r.getId();
             for (Waypoint w : map.getWaypoints()) {
                 if (r.getPosition().equals(w))
                     out += " " + w.getId() + ")\n";
             }
             if (r.isAssessed() && r.isRadioactive()) {
-                out += "        (is_radioactive " + r.getName() + ")\n";
+                out += "        (is_radioactive " + r.getId() + ")\n";
             }
         }
         for (Waypoint x : map.getWaypoints()) {
@@ -102,14 +102,14 @@ public class TroubleMaker {
         out += ")\n" +
                 "(:goal (and\n";
         for (Cleaner c : cleanersEnd) {
-            out += "            (at " + c.getName();
+            out += "            (at " + c.getId();
             for (Waypoint w : map.getWaypoints()) {
                 if (c.getPosition().equals(w))
                     out += " " + w.getId() + ")\n";
             }
         }
         for (Drone d : dronesEnd) {
-            out += "            (at " + d.getName();
+            out += "            (at " + d.getId();
             for (Waypoint w : map.getWaypoints()) {
                 if (d.getPosition().equals(w))
                     out += " " + w.getId() + ")\n";
@@ -117,13 +117,13 @@ public class TroubleMaker {
         }
         for (Rubble r : rubbles) {
             if (!r.isAssessed()){
-                out += "            (assessed " + r.getName() + ")\n";
+                out += "            (assessed " + r.getId() + ")\n";
             }
             else if (r.isRadioactive()){
-                out += "            (is_clean " + r.getName() + ")\n";
+                out += "            (is_clean " + r.getId() + ")\n";
             }
             else { //Is assessed but not radioactive
-                out += "            (at " + r.getName();
+                out += "            (at " + r.getId();
                 for (Waypoint w : map.getWaypoints()) {
                     if (rubblesEnd.get(rubbles.indexOf(r)).getPosition().equals(w))
                         out += " " + w.getId() + ")\n";

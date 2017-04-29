@@ -1,7 +1,7 @@
 {
   "participants" : [
     {
-      "name" : "drone0",
+      "id" : "drone0",
       "broken" : false,
       "position" : "r0",
       "deathCounter" : 50
@@ -9,13 +9,13 @@
     {
       "cargo" : null,
       "deathCounter" : 50,
-      "name" : "cleaner0",
+      "id" : "cleaner0",
       "position" : "r0",
       "broken" : false
     },
     {
       "assessed" : false,
-      "name" : "rubble0",
+      "id" : "rubble0",
       "position" : "r4",
       "radioactive" : true
     },
@@ -23,7 +23,7 @@
       "assessed" : false,
       "position" : "r3",
       "radioactive" : true,
-      "name" : "rubble1"
+      "id" : "rubble1"
     }
   ],
   "waypoints" : [
@@ -36,10 +36,6 @@
       ],
       "connectedWaypointsByLand" : [
         "r1"
-      ],
-      "connectedWaypoints" : [
-        "r4",
-        "r1"
       ]
     },
     {
@@ -49,10 +45,6 @@
         "r0"
       ],
       "connectedWaypointsByLand" : [
-        "r0",
-        "r2"
-      ],
-      "connectedWaypoints" : [
         "r0",
         "r2"
       ]
@@ -67,11 +59,6 @@
         "r1",
         "r3",
         "r4"
-      ],
-      "connectedWaypoints" : [
-        "r1",
-        "r3",
-        "r4"
       ]
     },
     {
@@ -83,10 +70,6 @@
       ],
       "connectedWaypointsByLand" : [
         "r2"
-      ],
-      "connectedWaypoints" : [
-        "r2",
-        "r4"
       ]
     },
     {
@@ -98,11 +81,6 @@
       ],
       "connectedWaypointsByLand" : [
         "r2"
-      ],
-      "connectedWaypoints" : [
-        "r0",
-        "r2",
-        "r3"
       ]
     }
   ],
@@ -110,25 +88,25 @@
     {
       "position" : "r0",
       "broken" : false,
-      "name" : "drone0",
+      "id" : "drone0",
       "deathCounter" : 50
     },
     {
       "broken" : false,
       "position" : "r0",
-      "name" : "cleaner0",
+      "id" : "cleaner0",
       "deathCounter" : 50,
       "cargo" : null
     },
     {
       "assessed" : false,
-      "name" : "rubble0",
+      "id" : "rubble0",
       "radioactive" : false,
       "position" : "r1"
     },
     {
       "assessed" : false,
-      "name" : "rubble1",
+      "id" : "rubble1",
       "position" : "r1",
       "radioactive" : false
     }

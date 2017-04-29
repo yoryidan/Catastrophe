@@ -1,19 +1,20 @@
 package eu.atanasio.catastrophe.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Created by victorperez on 14/04/17.
  */
-@Data
-@EqualsAndHashCode(exclude={"position"})
-public class Pickable {
+@Getter
+@Setter
+@NoArgsConstructor
+public class Pickable extends IdClass {
     private Waypoint position;
-    private String name;
 
-    public Pickable(String name) {
-        this.name = name;
+    public Pickable(String id) {
+        super(id);
     }
 
     public boolean atDump(){

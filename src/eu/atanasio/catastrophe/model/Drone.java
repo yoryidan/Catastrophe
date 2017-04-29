@@ -1,19 +1,21 @@
 package eu.atanasio.catastrophe.model;
 
 import eu.atanasio.catastrophe.Exceptions.DroneOperationException;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Created by victorperez on 14/04/17.
  */
-@Data
-@EqualsAndHashCode(callSuper=true,exclude={"deathCounter"})
+@NoArgsConstructor
+@Getter
+@Setter
 public class Drone extends Machine {
     private int deathCounter;
 
-    public Drone (String name) {
-        super(name);
+    public Drone (String id) {
+        super(id);
     }
 
     public boolean assess (Rubble item) throws DroneOperationException {
