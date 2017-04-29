@@ -1,4 +1,4 @@
-package eu.atanasio;
+package eu.atanasio.catastrophe.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
  * Created by victorperez on 14/04/17.
  */
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper=true,exclude={"position"})
 public class Machine extends Pickable {
     private boolean broken;
 

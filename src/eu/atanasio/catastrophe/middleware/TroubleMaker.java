@@ -1,9 +1,9 @@
-package eu.atanasio.middleware;
+package eu.atanasio.catastrophe.middleware;
 
-import eu.atanasio.Cleaner;
-import eu.atanasio.Drone;
-import eu.atanasio.PointMap;
-import eu.atanasio.Rubble;
+import eu.atanasio.catastrophe.model.Cleaner;
+import eu.atanasio.catastrophe.model.Drone;
+import eu.atanasio.catastrophe.singletons.PointMap;
+import eu.atanasio.catastrophe.model.Rubble;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -12,7 +12,14 @@ import java.io.PrintWriter;
  * Created by victorperez on 16/04/17.
  */
 public class TroubleMaker {
-    public static void make(PointMap map, Cleaner[] cleaners, Drone[] drones, Rubble[] rubbles, Cleaner[] cleanersEnd, Drone[] dronesEnd, Rubble[] rubblesEnd) {
+    public static void make() {
+        PointMap map = PointMap.getInstance();
+        Cleaner[] cleaners = map.getListfromParticipants(Cleaner.class).toArray(new Cleaner[map.getListfromParticipants(Cleaner.class).size()]);
+        Drone[] drones = map.getListOf(Drone.class,map.getParticipants()).toArray(new Drone[map.getListOf(Drone.class,map.getParticipants()).size()]);
+        Rubble[] rubbles = map.getListOf(Rubble.class,map.getParticipants()).toArray(new Rubble[map.getListOf(Rubble.class,map.getParticipants()).size()]);
+        Cleaner[] cleanersEnd = map.getListOf(Cleaner.class,map.getFinalState()).toArray(new Cleaner[map.getListOf(Cleaner.class,map.getParticipants()).size()]);
+        Drone[] dronesEnd = map.getListOf(Drone.class,map.getFinalState()).toArray(new Drone[map.getListOf(Drone.class,map.getParticipants()).size()]);
+        Rubble[] rubblesEnd = map.getListOf(Rubble.class,map.getFinalState()).toArray(new Rubble[map.getListOf(Rubble.class,map.getParticipants()).size()]);
         String out = "(define (problem pickup1234) (:domain Nuclear)\n" +
                 "(:objects\n";
         for (int i = 0; i < cleaners.length; i++) {

@@ -1,5 +1,6 @@
-package eu.atanasio;
+package eu.atanasio.catastrophe.model;
 
+import eu.atanasio.catastrophe.Exceptions.DroneOperationException;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,9 +12,8 @@ import lombok.EqualsAndHashCode;
 public class Drone extends Machine {
     private int deathCounter;
 
-    public Drone (String name, int deathCounter) {
+    public Drone (String name) {
         super(name);
-        this.deathCounter = deathCounter;
     }
 
     public boolean assess (Rubble item) throws DroneOperationException {
@@ -24,6 +24,7 @@ public class Drone extends Machine {
                 deathCounter--;
             if (deathCounter<=0)
                 this.setBroken(true);
+            item.setAssessed(true);
             return item.isRadioactive();
         }
         else

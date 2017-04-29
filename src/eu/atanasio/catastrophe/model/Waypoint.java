@@ -1,4 +1,4 @@
-package eu.atanasio;
+package eu.atanasio.catastrophe.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;

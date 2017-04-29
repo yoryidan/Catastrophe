@@ -1,10 +1,15 @@
-package eu.atanasio;
+package eu.atanasio.catastrophe.singletons;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import eu.atanasio.catastrophe.model.Cleaner;
+import eu.atanasio.catastrophe.model.Drone;
+import eu.atanasio.catastrophe.model.Pickable;
+import eu.atanasio.catastrophe.model.Rubble;
+import eu.atanasio.catastrophe.model.Waypoint;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,8 +62,9 @@ public class PointMapDeserializer extends JsonDeserializer<PointMap> {
             Pickable p;
             switch (node.get("participants").get(i).get("class").asText()){
                 case "Drone":
-                    Drone d = new Drone(node.get("participants").get(i).get("name").asText(),node.get("participants").get(i).get("deathCounter").asInt());
+                    Drone d = new Drone(node.get("participants").get(i).get("name").asText());
                     d.setBroken(node.get("participants").get(i).get("broken").asBoolean());
+                    d.setDeathCounter(node.get("participants").get(i).get("deathCounter").asInt());
                     for(Waypoint w : waypointList){
                         Waypoint aux = new Waypoint(node.get("participants").get(i).get("position").asText());
                         if(aux.equals(w)){
@@ -68,7 +74,8 @@ public class PointMapDeserializer extends JsonDeserializer<PointMap> {
                     p = d;
                     break;
                 case "Cleaner":
-                    Cleaner c = new Cleaner(node.get("participants").get(i).get("name").asText(),node.get("participants").get(i).get("deathCounter").asInt());
+                    Cleaner c = new Cleaner(node.get("participants").get(i).get("name").asText());
+                    c.setDeathCounter(node.get("participants").get(i).get("deathCounter").asInt());
                     c.setBroken(node.get("participants").get(i).get("broken").asBoolean());
                     for(Waypoint w : waypointList){
                         Waypoint aux = new Waypoint(node.get("participants").get(i).get("position").asText());
@@ -99,7 +106,8 @@ public class PointMapDeserializer extends JsonDeserializer<PointMap> {
             Pickable p;
             switch (node.get("finalState").get(i).get("class").asText()){
                 case "Drone":
-                    Drone d = new Drone(node.get("finalState").get(i).get("name").asText(),node.get("finalState").get(i).get("deathCounter").asInt());
+                    Drone d = new Drone(node.get("finalState").get(i).get("name").asText());
+                    d.setDeathCounter(node.get("finalState").get(i).get("deathCounter").asInt());
                     d.setBroken(node.get("finalState").get(i).get("broken").asBoolean());
                     for(Waypoint w : waypointList){
                         Waypoint aux = new Waypoint(node.get("finalState").get(i).get("position").asText());
@@ -110,7 +118,8 @@ public class PointMapDeserializer extends JsonDeserializer<PointMap> {
                     p = d;
                     break;
                 case "Cleaner":
-                    Cleaner c = new Cleaner(node.get("finalState").get(i).get("name").asText(),node.get("finalState").get(i).get("deathCounter").asInt());
+                    Cleaner c = new Cleaner(node.get("finalState").get(i).get("name").asText());
+                    c.setDeathCounter(node.get("finalState").get(i).get("deathCounter").asInt());
                     c.setBroken(node.get("finalState").get(i).get("broken").asBoolean());
                     for(Waypoint w : waypointList){
                         Waypoint aux = new Waypoint(node.get("finalState").get(i).get("position").asText());

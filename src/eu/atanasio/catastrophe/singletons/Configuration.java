@@ -1,4 +1,4 @@
-package eu.atanasio;
+package eu.atanasio.catastrophe.singletons;
 
 import lombok.Data;
 

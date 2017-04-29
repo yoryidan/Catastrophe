@@ -1,5 +1,6 @@
-package eu.atanasio;
+package eu.atanasio.catastrophe.model;
 
+import eu.atanasio.catastrophe.Exceptions.CleanerOperationException;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,9 +13,8 @@ public class Cleaner extends Machine {
     private int deathCounter;
     private Pickable cargo;
 
-    public Cleaner(String name, int deathCounter) {
+    public Cleaner(String name) {
         super(name);
-        this.deathCounter = deathCounter;
     }
 
     public void pickUp (Pickable item) throws CleanerOperationException {

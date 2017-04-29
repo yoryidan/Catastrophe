@@ -1,6 +1,7 @@
 package eu.atanasio;
 
-import eu.atanasio.middleware.Executioner;
+import eu.atanasio.catastrophe.middleware.Executioner;
+import eu.atanasio.catastrophe.singletons.Configuration;
 
 public class Main {
 
@@ -9,7 +10,6 @@ public class Main {
         Configuration conf = Configuration.getInstance();
         conf.getProperties().setProperty("map", args[0]);
         Executioner exe = new Executioner();
-        exe.setUp();
         exe.init();
     }
 }
