@@ -1,13 +1,20 @@
 package eu.atanasio;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Created by victorperez on 14/04/17.
  */
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Waypoint {
-    private String name;
+
+    @JsonProperty
+    private String id;
     private Set<Waypoint> connectedWaypoints;
     private Set<Waypoint> connectedWaypointsByLand;
     private Set<Waypoint> connectedWaypointsByFlight;
@@ -20,8 +27,8 @@ public class Waypoint {
         this.connectedWaypoints.addAll(connectedWaypointsByFlight);
     }
 
-    public Waypoint(String name) {
-        this.name = name;
+    public Waypoint(String id) {
+        this.id = id;
         connectedWaypoints = new HashSet<>();
         dump = false;
     }
@@ -70,16 +77,16 @@ public class Waypoint {
 
         Waypoint waypoint = (Waypoint) o;
 
-        return name != null ? name.equals(waypoint.name) : waypoint.name == null;
+        return id != null ? id.equals(waypoint.id) : waypoint.id == null;
     }
 
     @Override
     public int hashCode() {
-        return name != null ? name.hashCode() : 0;
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return name;
+        return id;
     }
 }

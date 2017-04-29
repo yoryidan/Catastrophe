@@ -25,7 +25,6 @@ import java.util.HashSet;
  */
 @Data
 public class Executioner {
-
     public static Waypoint r0 = new Waypoint("r0");
     public static Waypoint r1 = new Waypoint("r1");
     public static Waypoint r2 = new Waypoint("r2");
@@ -45,8 +44,6 @@ public class Executioner {
     public static Rubble rubble1End = new Rubble("rubble1");
     public static Pickable[] finalState = {drone0End,cleaner0End,rubble0End,rubble1End};
 
-    public static PointMap map = new PointMap(waypoints,participants,finalState);
-
     public static Cleaner[] cleaners = getArrayOfCleaners(participants);
     public static Drone[] drones = getArrayOfDrones(participants);
     public static Rubble[] rubbles = getArrayOfRubbles(participants);
@@ -55,6 +52,11 @@ public class Executioner {
     public static Rubble[] rubblesEnd = getArrayOfRubbles(finalState);
 
     public void setUp(){
+        //map.setWaypoints(waypoints);
+        //map.setParticipants(participants);
+        //map.setFinalState(finalState);
+        PointMap map = PointMap.getInstance();
+
         drone0.setPosition(map.getWaypoints()[0]);
         cleaner0.setPosition(map.getWaypoints()[0]);
         rubble0.setPosition(map.getWaypoints()[4]);
@@ -68,9 +70,13 @@ public class Executioner {
         cleaner0End.setPosition(map.getWaypoints()[0]);
         rubble0End.setPosition(map.getWaypoints()[1]);
         rubble1End.setPosition(map.getWaypoints()[1]);
+
+
+        //map.save();
     }
 
     public void runPlanner(){
+        PointMap map = PointMap.getInstance();
         TroubleMaker.make(map,cleaners,drones,rubbles,cleanersEnd,dronesEnd,rubblesEnd);
 
         try {
