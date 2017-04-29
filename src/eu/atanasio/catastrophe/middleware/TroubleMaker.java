@@ -2,11 +2,13 @@ package eu.atanasio.catastrophe.middleware;
 
 import eu.atanasio.catastrophe.model.Cleaner;
 import eu.atanasio.catastrophe.model.Drone;
-import eu.atanasio.catastrophe.singletons.PointMap;
 import eu.atanasio.catastrophe.model.Rubble;
+import eu.atanasio.catastrophe.model.Waypoint;
+import eu.atanasio.catastrophe.singletons.PointMap;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * Created by victorperez on 16/04/17.
@@ -14,117 +16,117 @@ import java.io.PrintWriter;
 public class TroubleMaker {
     public static void make() {
         PointMap map = PointMap.getInstance();
-        Cleaner[] cleaners = map.getListfromParticipants(Cleaner.class).toArray(new Cleaner[map.getListfromParticipants(Cleaner.class).size()]);
-        Drone[] drones = map.getListOf(Drone.class,map.getParticipants()).toArray(new Drone[map.getListOf(Drone.class,map.getParticipants()).size()]);
-        Rubble[] rubbles = map.getListOf(Rubble.class,map.getParticipants()).toArray(new Rubble[map.getListOf(Rubble.class,map.getParticipants()).size()]);
-        Cleaner[] cleanersEnd = map.getListOf(Cleaner.class,map.getFinalState()).toArray(new Cleaner[map.getListOf(Cleaner.class,map.getParticipants()).size()]);
-        Drone[] dronesEnd = map.getListOf(Drone.class,map.getFinalState()).toArray(new Drone[map.getListOf(Drone.class,map.getParticipants()).size()]);
-        Rubble[] rubblesEnd = map.getListOf(Rubble.class,map.getFinalState()).toArray(new Rubble[map.getListOf(Rubble.class,map.getParticipants()).size()]);
+        List<Cleaner> cleaners = map.getListfromParticipants(Cleaner.class);
+        List<Drone> drones = map.getListfromParticipants(Drone.class);
+        List<Rubble> rubbles = map.getListfromParticipants(Rubble.class);
+        List<Cleaner> cleanersEnd = map.getListfromFinal(Cleaner.class);
+        List<Drone> dronesEnd = map.getListfromFinal(Drone.class);
+        List<Rubble> rubblesEnd = map.getListfromFinal(Rubble.class);
         String out = "(define (problem pickup1234) (:domain Nuclear)\n" +
                 "(:objects\n";
-        for (int i = 0; i < cleaners.length; i++) {
-            out += "        (:private cleaner" + i + "\n" +
-                    "            cleaner" + i + " - cleaner\n" +
+        for (Cleaner c : cleaners){
+            out += "        (:private " + c.getName() + "\n" +
+                    "            " + c.getName() + " - cleaner\n" +
                     "        )\n";
         }
-        for (int i = 0; i < drones.length; i++) {
-            out += "        (:private drone" + i + "\n" +
-                    "            drone" + i + " - drone\n" +
+        for (Drone d : drones) {
+            out += "        (:private " + d.getName() + "\n" +
+                    "            " + d.getName() + " - drone\n" +
                     "        )\n";
         }
-        for (int i = 0; i < map.getWaypoints().length; i++) {
-            if (map.getWaypoints()[i].isDump())
-                out += "        waypoint" + i + " - dump\n";
+        for (Waypoint w : map.getWaypoints()) {
+            if (w.isDump())
+                out += "        " + w.getId() + " - dump\n";
             else
-                out += "        waypoint" + i + " - waypoint\n";
+                out += "        " + w.getId() + " - waypoint\n";
         }
-        for (int i = 0; i < rubbles.length; i++) {
-            out += "        rubble" + i + " - rubble\n";
+        for (Rubble r : rubbles) {
+            out += "        " + r.getName() + " - rubble\n";
         }
         out += ")\n" +
                 "(:init\n";
-        for (int i = 0; i < drones.length; i++) {
-            out += "        (is_active drone" + i + ")\n" +
-                    "        (at drone" + i;
-            for (int z = 0; z < map.getWaypoints().length; z++) {
-                if (drones[i].getPosition().equals(map.getWaypoints()[z]))
-                    out += " waypoint" + z + ")\n";
+        for (Drone d : drones) {
+            out += "        (is_active " + d.getName() + ")\n" +
+                    "        (at " + d.getName();
+            for (Waypoint w : map.getWaypoints()) {
+                if (d.getPosition().equals(w))
+                    out += " " + w.getId() + ")\n";
             }
-            if (drones[i].isBroken()){
-                out += "        (is_broken drone"+i+")\n";
-            }
-            else {
-                out += "        (is_active drone"+i+")\n";
-            }
-        }
-        for (int i = 0; i < cleaners.length; i++) {
-            if (cleaners[i].getCargo() == null){
-                out += "        (empty cleaner" + i + ")\n" ;
+            if (d.isBroken()){
+                out += "        (is_broken " + d.getName() + ")\n";
             }
             else {
-                out += "        (full " + cleaners[i].getCargo().getName() + " cleaner" + i + ")\n" ;
+                out += "        (is_active " + d.getName() + ")\n";
             }
-            out += "        (is_active cleaner" + i + ")\n" +
-                    "        (at cleaner" + i;
-            for (int z = 0; z < map.getWaypoints().length; z++) {
-                if (cleaners[i].getPosition().equals(map.getWaypoints()[z]))
-                    out += " waypoint" + z + ")\n";
-            }
-            if (cleaners[i].isBroken()){
-                out += "        (is_broken cleaner"+i+")\n";
+        }
+        for (Cleaner c : cleaners) {
+            if (c.getCargo() == null){
+                out += "        (empty " + c.getName() + ")\n" ;
             }
             else {
-                out += "        (is_active cleaner"+i+")\n";
+                out += "        (full " + c.getCargo().getName() + " " + c.getName() + ")\n" ;
+            }
+            out += "        (is_active " + c.getName() + ")\n" +
+                    "        (at " + c.getName();
+            for (Waypoint w : map.getWaypoints()) {
+                if (c.getPosition().equals(w))
+                    out += " " + w.getId() + ")\n";
+            }
+            if (c.isBroken()){
+                out += "        (is_broken " + c.getName() + ")\n";
+            }
+            else {
+                out += "        (is_active " + c.getName() + ")\n";
             }
         }
-        for (int i = 0; i < rubbles.length; i++) {
-            out += "        (at rubble" + i;
-            for (int z = 0; z < map.getWaypoints().length; z++) {
-                if (rubbles[i].getPosition().equals(map.getWaypoints()[z]))
-                    out += " waypoint" + z + ")\n";
+        for (Rubble r : rubbles) {
+            out += "        (at " + r.getName();
+            for (Waypoint w : map.getWaypoints()) {
+                if (r.getPosition().equals(w))
+                    out += " " + w.getId() + ")\n";
             }
-            if (rubbles[i].isAssessed() && rubbles[i].isRadioactive()) {
-                out += "        (is_radioactive rubble" + i + ")\n";
+            if (r.isAssessed() && r.isRadioactive()) {
+                out += "        (is_radioactive " + r.getName() + ")\n";
             }
         }
-        for (int i = 0; i < map.getWaypoints().length; i++) {
-            for (int z = 0; z < map.getWaypoints().length; z++) {
-                if (map.getWaypoints()[i].getConnectedWaypoints().contains(map.getWaypoints()[z]))
-                    out += "        (visible waypoint"+i+" waypoint"+z+")\n";
-                if (map.getWaypoints()[i].getConnectedWaypointsByFlight().contains(map.getWaypoints()[z]))
-                    out += "        (traversable_flight waypoint"+i+" waypoint"+z+")\n";
-                if (map.getWaypoints()[i].getConnectedWaypointsByLand().contains(map.getWaypoints()[z]))
-                    out += "        (traversable_land waypoint"+i+" waypoint"+z+")\n";
+        for (Waypoint x : map.getWaypoints()) {
+            for (Waypoint y : map.getWaypoints()) {
+                if (x.getConnectedWaypoints().contains(y))
+                    out += "        (visible " + x.getId() + " " + y.getId() + ")\n";
+                if (x.getConnectedWaypointsByFlight().contains(y))
+                    out += "        (traversable_flight " + x.getId() + " " + y.getId() + ")\n";
+                if (x.getConnectedWaypointsByLand().contains(y))
+                    out += "        (traversable_land " + x.getId() + " " + y.getId() + ")\n";
             }
         }
         out += ")\n" +
                 "(:goal (and\n";
-        for (int i = 0; i < cleanersEnd.length; i++) {
-            out += "            (at cleaner" + i;
-            for (int z = 0; z < map.getWaypoints().length; z++) {
-                if (cleanersEnd[i].getPosition().equals(map.getWaypoints()[z]))
-                    out += " waypoint" + z + ")\n";
+        for (Cleaner c : cleanersEnd) {
+            out += "            (at " + c.getName();
+            for (Waypoint w : map.getWaypoints()) {
+                if (c.getPosition().equals(w))
+                    out += " " + w.getId() + ")\n";
             }
         }
-        for (int i = 0; i < dronesEnd.length; i++) {
-            out += "            (at drone" + i;
-            for (int z = 0; z < map.getWaypoints().length; z++) {
-                if (dronesEnd[i].getPosition().equals(map.getWaypoints()[z]))
-                    out += " waypoint" + z + ")\n";
+        for (Drone d : dronesEnd) {
+            out += "            (at " + d.getName();
+            for (Waypoint w : map.getWaypoints()) {
+                if (d.getPosition().equals(w))
+                    out += " " + w.getId() + ")\n";
             }
         }
-        for (int i = 0; i < rubblesEnd.length; i++) {
-            if (!rubbles[i].isAssessed()){
-                out += "            (assessed rubble" + i + ")\n";
+        for (Rubble r : rubbles) {
+            if (!r.isAssessed()){
+                out += "            (assessed " + r.getName() + ")\n";
             }
-            else if (rubbles[i].isRadioactive()){
-                out += "            (is_clean rubble" + i + ")\n";
+            else if (r.isRadioactive()){
+                out += "            (is_clean " + r.getName() + ")\n";
             }
             else { //Is assessed but not radioactive
-                out += "            (at rubble" + i;
-                for (int z = 0; z < map.getWaypoints().length; z++) {
-                    if (rubblesEnd[i].getPosition().equals(map.getWaypoints()[z]))
-                        out += " waypoint" + z + ")\n";
+                out += "            (at " + r.getName();
+                for (Waypoint w : map.getWaypoints()) {
+                    if (rubblesEnd.get(rubbles.indexOf(r)).getPosition().equals(w))
+                        out += " " + w.getId() + ")\n";
                 }
             }
         }

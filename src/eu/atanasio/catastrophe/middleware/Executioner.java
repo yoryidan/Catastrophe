@@ -81,7 +81,7 @@ public class Executioner {
                 try {
                     Drone cls;
                     String name;
-                    name = "drone"+command[3].split("[a-zA-Z]+")[1];
+                    name = command[3].toLowerCase();
                     try {
                         cls = map.getParticipant(Drone.class, new Drone(name));
                     } catch (NotFoundInMapException e) {
@@ -91,7 +91,7 @@ public class Executioner {
                     Rubble r;
                     switch (command[2]){
                         case "FLY":
-                            name = "r"+command[5].split("[a-zA-Z]+")[1];
+                            name = command[5].toLowerCase();
                             try {
                                 y = map.getWaypoint(name);
                             } catch (NotFoundInMapException e) {
@@ -100,7 +100,7 @@ public class Executioner {
                             cls.fly(y);
                             return 0;
                         case "ASSESS":
-                            name = "rubble"+command[4].split("[a-zA-Z]+")[1];
+                            name = command[4].toLowerCase();
                             try {
                                 r = map.getParticipant(Rubble.class, new Rubble(name));
                             } catch (NotFoundInMapException e) {
@@ -117,7 +117,7 @@ public class Executioner {
             case "CLEANER":
                 try {
                     Cleaner cls;
-                    String name = "cleaner"+command[3].split("[a-zA-Z]+")[1];
+                    String name = command[3].toLowerCase();
                     try {
                         cls = map.getParticipant(Cleaner.class, new Cleaner(name));
                     } catch (NotFoundInMapException e) {
@@ -127,7 +127,7 @@ public class Executioner {
                     Pickable r;
                     switch (command[2]){
                         case "WALK":
-                            name = "r"+command[5].split("[a-zA-Z]+")[1];
+                            name = command[5].toLowerCase();
                             try {
                                 y = map.getWaypoint(name);
                             } catch (NotFoundInMapException e) {
@@ -136,7 +136,7 @@ public class Executioner {
                             cls.walk(y);
                             return 0;
                         case "PICKUP_RUBBLE":
-                            name = "rubble"+command[4].split("[a-zA-Z]+")[1];
+                            name = command[4].toLowerCase();
                             try {
                                 r = map.getParticipant(Rubble.class, new Rubble(name));
                             } catch (NotFoundInMapException e) {
@@ -145,9 +145,9 @@ public class Executioner {
                             cls.pickUp(r);
                             return 0;
                         case "PICKUP_MACHINE":
+                            name = command[4].toLowerCase();
                             switch (command[4].split("\\d")[0]){
                                 case "DRONE":
-                                    name = "drone"+command[4].split("[a-zA-Z]+")[1];
                                     try {
                                         r = map.getParticipant(Drone.class, new Drone(name));
                                     } catch (NotFoundInMapException e) {
@@ -155,7 +155,6 @@ public class Executioner {
                                     }
                                     break;
                                 case "CLEANER":
-                                    name = "cleaner"+command[4].split("[a-zA-Z]+")[1];
                                     try {
                                         r = map.getParticipant(Cleaner.class, new Cleaner(name));
                                     } catch (NotFoundInMapException e) {

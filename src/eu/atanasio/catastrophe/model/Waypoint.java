@@ -62,6 +62,14 @@ public class Waypoint {
         this.connectedWaypointsByFlight = connectedWaypointsByFlight;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public boolean isDump() {
         return dump;
     }
