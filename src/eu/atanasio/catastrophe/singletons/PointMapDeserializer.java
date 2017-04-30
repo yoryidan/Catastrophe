@@ -1,7 +1,6 @@
 package eu.atanasio.catastrophe.singletons;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -21,7 +20,7 @@ import java.util.HashSet;
 public class PointMapDeserializer extends JsonDeserializer<PointMap> {
 
     @Override
-    public PointMap deserialize(JsonParser jp, DeserializationContext dc) throws IOException, JsonProcessingException {
+    public PointMap deserialize(JsonParser jp, DeserializationContext dc) throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         Waypoint[] waypoints;
         Pickable[] participants;
