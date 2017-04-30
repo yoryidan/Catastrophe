@@ -1,4 +1,4 @@
-package eu.atanasio.catastrophe.singletons;
+package main.java.catastrophe.singletons;
 
 import lombok.Data;
 

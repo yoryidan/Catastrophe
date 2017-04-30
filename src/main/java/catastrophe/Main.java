@@ -1,7 +1,7 @@
-package eu.atanasio.catastrophe;
+package main.java.catastrophe;
 
-import eu.atanasio.catastrophe.middleware.Executioner;
-import eu.atanasio.catastrophe.singletons.Configuration;
+import main.java.catastrophe.middleware.Executioner;
+import main.java.catastrophe.singletons.Configuration;
 
 public class Main {
 

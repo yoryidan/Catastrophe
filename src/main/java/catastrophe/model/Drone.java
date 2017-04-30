@@ -1,6 +1,6 @@
-package eu.atanasio.catastrophe.model;
+package main.java.catastrophe.model;
 
-import eu.atanasio.catastrophe.Exceptions.DroneOperationException;
+import main.java.catastrophe.Exceptions.DroneOperationException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

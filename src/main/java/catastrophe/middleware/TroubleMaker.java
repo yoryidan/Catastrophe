@@ -1,11 +1,11 @@
-package eu.atanasio.catastrophe.middleware;
+package main.java.catastrophe.middleware;
 
-import eu.atanasio.catastrophe.model.Cleaner;
-import eu.atanasio.catastrophe.model.Drone;
-import eu.atanasio.catastrophe.model.Rubble;
-import eu.atanasio.catastrophe.model.Waypoint;
-import eu.atanasio.catastrophe.singletons.Configuration;
-import eu.atanasio.catastrophe.singletons.PointMap;
+import main.java.catastrophe.model.Cleaner;
+import main.java.catastrophe.model.Drone;
+import main.java.catastrophe.model.Rubble;
+import main.java.catastrophe.model.Waypoint;
+import main.java.catastrophe.singletons.Configuration;
+import main.java.catastrophe.singletons.PointMap;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

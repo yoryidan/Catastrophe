@@ -1,14 +1,14 @@
-package eu.atanasio.catastrophe.singletons;
+package main.java.catastrophe.singletons;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import eu.atanasio.catastrophe.model.Cleaner;
-import eu.atanasio.catastrophe.model.Drone;
-import eu.atanasio.catastrophe.model.Pickable;
-import eu.atanasio.catastrophe.model.Rubble;
-import eu.atanasio.catastrophe.model.Waypoint;
+import main.java.catastrophe.model.Cleaner;
+import main.java.catastrophe.model.Drone;
+import main.java.catastrophe.model.Pickable;
+import main.java.catastrophe.model.Rubble;
+import main.java.catastrophe.model.Waypoint;
 
 import java.io.IOException;
 import java.util.ArrayList;

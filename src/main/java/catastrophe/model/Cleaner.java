@@ -1,6 +1,6 @@
-package eu.atanasio.catastrophe.model;
+package main.java.catastrophe.model;
 
-import eu.atanasio.catastrophe.Exceptions.CleanerOperationException;
+import main.java.catastrophe.Exceptions.CleanerOperationException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

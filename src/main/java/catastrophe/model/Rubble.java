@@ -1,4 +1,4 @@
-package eu.atanasio.catastrophe.model;
+package main.java.catastrophe.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

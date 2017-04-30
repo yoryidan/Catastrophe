@@ -1,10 +1,10 @@
-package eu.atanasio.catastrophe.singletons;
+package main.java.catastrophe.singletons;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import eu.atanasio.catastrophe.Exceptions.NotFoundInMapException;
-import eu.atanasio.catastrophe.model.Pickable;
-import eu.atanasio.catastrophe.model.Waypoint;
+import main.java.catastrophe.Exceptions.NotFoundInMapException;
+import main.java.catastrophe.model.Pickable;
+import main.java.catastrophe.model.Waypoint;
 import lombok.Data;
 
 import java.io.File;
@@ -42,15 +42,6 @@ public class PointMap {
         this.waypoints = waypoints;
         this.participants = participants;
         this.finalState = finalState;
-    }
-
-    public void save(){
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            mapper.writeValue(new File(conf.getProperties().getProperty("map")), instance);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public static PointMap getInstance(){
