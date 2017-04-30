@@ -2,6 +2,10 @@ package eu.atanasio.catastrophe.singletons;
 
 import lombok.Data;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 /**
@@ -9,11 +13,22 @@ import java.util.Properties;
  */
 @Data
 public class Configuration {
-    private static Configuration instance = new Configuration();
+    private static Configuration instance = null;
     private Properties properties;
 
     private Configuration(){
+        InputStream input = null;
         properties = new Properties();
+        try {
+            input = new FileInputStream("./conf/catastrophe.conf");
+            properties.load(input);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     public static Configuration getInstance(){
