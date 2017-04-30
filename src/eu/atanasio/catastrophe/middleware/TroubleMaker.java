@@ -4,6 +4,7 @@ import eu.atanasio.catastrophe.model.Cleaner;
 import eu.atanasio.catastrophe.model.Drone;
 import eu.atanasio.catastrophe.model.Rubble;
 import eu.atanasio.catastrophe.model.Waypoint;
+import eu.atanasio.catastrophe.singletons.Configuration;
 import eu.atanasio.catastrophe.singletons.PointMap;
 
 import java.io.FileNotFoundException;
@@ -14,6 +15,8 @@ import java.util.List;
  * Created by victorperez on 16/04/17.
  */
 public class TroubleMaker {
+    static Configuration conf = Configuration.getInstance();
+
     public static void make() {
         PointMap map = PointMap.getInstance();
         List<Cleaner> cleaners = map.getListfromParticipants(Cleaner.class);
@@ -134,7 +137,7 @@ public class TroubleMaker {
                 ")\n" +
                 ")\n";
         try {
-            PrintWriter printer = new PrintWriter("/home/victorperez/ATA/output/p01.pddl");
+            PrintWriter printer = new PrintWriter(conf.getProperty("output") + "/p01.pddl");
             printer.print(out);
             printer.close();
         } catch (FileNotFoundException e) {

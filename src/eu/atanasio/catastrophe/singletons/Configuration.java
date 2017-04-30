@@ -37,4 +37,8 @@ public class Configuration {
         }
         return instance;
     }
+
+    public String getProperty(String key){
+        return properties.getProperty(key);
+    }
 }

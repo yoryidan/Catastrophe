@@ -7,6 +7,7 @@ import eu.atanasio.catastrophe.model.Drone;
 import eu.atanasio.catastrophe.Exceptions.DroneOperationException;
 import eu.atanasio.catastrophe.Exceptions.NotFoundInMapException;
 import eu.atanasio.catastrophe.model.Pickable;
+import eu.atanasio.catastrophe.singletons.Configuration;
 import eu.atanasio.catastrophe.singletons.PointMap;
 import eu.atanasio.catastrophe.model.Rubble;
 import eu.atanasio.catastrophe.model.Waypoint;
@@ -22,13 +23,14 @@ import java.io.PrintWriter;
  * Created by victorperez on 18/04/17.
  */
 public class Executioner {
+    static Configuration conf = Configuration.getInstance();
 
     public void runPlanner(){
         TroubleMaker.make();
 
         try {
-            Process p=Runtime.getRuntime().exec("./run-map.sh -d /home/victorperez/ATA/output/domain.pddl -p /home/victorperez/ATA/output/p01.pddl -o output -A cmap -s mingoals -P private -M nil  -a lama-unit-cost -r lama-unit-cost -g subsets -y nil -Y lama-second -t 1800 -C t",
-                    null, new File("/home/victorperez/ATA/CMAP/"));
+            Process p=Runtime.getRuntime().exec("./run-map.sh -d " + conf.getProperty("output") + "/domain.pddl -p " + conf.getProperty("output") + "/p01.pddl -o output -A cmap -s mingoals -P private -M nil  -a lama-unit-cost -r lama-unit-cost -g subsets -y nil -Y lama-second -t 1800 -C t",
+                    null, new File(conf.getProperty("cmap")));
             p.waitFor();
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,7 +43,7 @@ public class Executioner {
         runPlanner();
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader("/home/victorperez/ATA/CMAP/output"));
+            BufferedReader br = new BufferedReader(new FileReader(conf.getProperty("cmap") + "/output"));
             String line = br.readLine();
             StringBuilder sb = new StringBuilder();
 
@@ -52,13 +54,13 @@ public class Executioner {
                     if (executeCommand(line.split(":? +\\(?|\\)"))>0){
                         br.close();
                         runPlanner();
-                        br = new BufferedReader(new FileReader("/home/victorperez/ATA/CMAP/output"));
+                        br = new BufferedReader(new FileReader(conf.getProperty("cmap") + "/output"));
                     }
                 }
                 line = br.readLine();
             }
             try {
-                PrintWriter printer = new PrintWriter("/home/victorperez/ATA/output/simulation_results");
+                PrintWriter printer = new PrintWriter(conf.getProperty("output") + "/simulation_results");
                 printer.print(sb.toString());
                 printer.close();
             } catch (FileNotFoundException e) {
