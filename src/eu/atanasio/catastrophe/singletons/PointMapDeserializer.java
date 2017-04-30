@@ -102,6 +102,18 @@ public class PointMapDeserializer extends JsonDeserializer<PointMap> {
             }
             participantList.add(p);
         }
+        //This assigns cargo AFTER all pickables have been loaded
+        for (int i = 0; i < node.get("participants").size(); i++){
+            switch (node.get("participants").get(i).get("class").asText()){
+                case "Cleaner":
+                    Cleaner c = (Cleaner)participantList.get(i);
+                    if (!node.get("participants").get(i).get("cargo").isNull()){
+                        c.setCargo(participantList.get(participantList.indexOf(new Pickable(node.get("participants").get(i).get("id").asText()))));
+                    }
+                    break;
+            }
+        }
+
         for (int i = 0; i < node.get("finalState").size(); i++){
             Pickable p;
             switch (node.get("finalState").get(i).get("class").asText()){
@@ -145,6 +157,17 @@ public class PointMapDeserializer extends JsonDeserializer<PointMap> {
                     throw new RuntimeException("Cannot recognize some of the classes.");
             }
             finalStateList.add(p);
+        }
+        //This assigns cargo AFTER all pickables have been loaded
+        for (int i = 0; i < node.get("finalState").size(); i++){
+            switch (node.get("finalState").get(i).get("class").asText()){
+                case "Cleaner":
+                    Cleaner c = (Cleaner)finalStateList.get(i);
+                    if (!node.get("finalState").get(i).get("cargo").isNull()){
+                        c.setCargo(finalStateList.get(finalStateList.indexOf(new Pickable(node.get("finalState").get(i).get("id").asText()))));
+                    }
+                    break;
+            }
         }
 
         waypoints = waypointList.toArray(new Waypoint[waypointList.size()]);
